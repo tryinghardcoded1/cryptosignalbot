@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile or access control. Though we only need auth to read/write signals for now, we can create this.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "Signal": {
+      "title": "Signal",
+      "description": "A trading signal.",
+      "type": "object",
+      "properties": {
+        "pair": {
+          "type": "string"
+        },
+        "signal": {
+          "type": "string"
+        },
+        "entry": {
+          "type": "number"
+        },
+        "takeProfit": {
+          "type": "number"
+        },
+        "stopLoss": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "isWebhook": {
+          "type": "boolean"
+        },
+        "webhookSecret": {
+          "type": "string"
+        }
+      },
+      "required": ["pair", "signal", "entry", "takeProfit", "stopLoss", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profile documents."
+    },
+    "/signals/{signalId}": {
+      "schema": {
+        "$ref": "#/entities/Signal"
+      },
+      "description": "Signals collection."
+    }
+  }
+}

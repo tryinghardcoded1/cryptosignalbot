@@ -1,0 +1,6 @@
+{
+  "name": "Crypto Signal Dashboard",
+  "description": "A full-stack, real-time cryptocurrency signals dashboard using Firebase Auth and Firestore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

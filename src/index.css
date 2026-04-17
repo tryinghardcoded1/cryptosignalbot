@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gb-bg: #0A0B0D;
+  --color-gb-surface: #131722;
+  --color-gb-accent: #3673F5;
+  --color-gb-success: #00FF94;
+  --color-gb-danger: #FF3B69;
+  --color-gb-text-primary: #FFFFFF;
+  --color-gb-text-secondary: #848E9C;
+  --color-gb-line: #1E222D;
+
+  --font-gb-mono: "Courier New", Courier, monospace;
+  --font-gb-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-gb-bg text-gb-text-primary antialiased;
+    font-family: var(--font-gb-sans);
+  }
+}
