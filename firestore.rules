@@ -54,7 +54,7 @@ service cloud.firestore {
     }
     
     match /users/{userId} {
-      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow read, list: if isSignedIn() && (request.auth.uid == userId || isAdmin());
 
       function isValidUserDoc() {
         return incoming().keys().hasAll(['email', 'createdAt'])
@@ -70,9 +70,9 @@ service cloud.firestore {
         && (!incoming().keys().hasAny(['isAdmin']) || incoming().isAdmin == false || incoming().email == 'cerezvincent1@gmail.com');
 
       allow update: if isSignedIn() 
-        && request.auth.uid == userId 
+        && (request.auth.uid == userId || isAdmin())
         && isValidUserDoc()
-        && (!incoming().keys().hasAny(['isAdmin']) || incoming().isAdmin == false || incoming().email == 'cerezvincent1@gmail.com');
+        && (!incoming().keys().hasAny(['isAdmin']) || incoming().isAdmin == false || isAdmin() || incoming().email == 'cerezvincent1@gmail.com');
     }
 
     match /signals/{signalId} {

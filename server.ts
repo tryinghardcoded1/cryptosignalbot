@@ -17,11 +17,6 @@ async function startServer() {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      // We need to write this to Firestore. 
-      // We will handle this lazily once Firebase is initialized in server space.
-      // Easiest is to import the db instance from a shared module, but since we are server side
-      // and want to maintain simplicity, we'll do an authenticated write inside this route handler.
-      // Wait, we can import our firebase admin/client logic here.
       const { addSignalFromServer } = await import("./src/lib/firebase-server-helper.ts");
       await addSignalFromServer({ pair, signal, entry, takeProfit, stopLoss });
       
@@ -29,6 +24,17 @@ async function startServer() {
     } catch (error) {
       console.error("Webhook error:", error);
       res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  // Telegram Notifications Route
+  app.post("/api/send-signal", async (req, res) => {
+    try {
+      const { sendTelegramSignal } = await import("./api/send-signal.ts");
+      await sendTelegramSignal(req, res);
+    } catch (error) {
+      console.error("Error loading Telegram handler:", error);
+      res.status(500).json({ error: "Failed to load route." });
     }
   });
 
